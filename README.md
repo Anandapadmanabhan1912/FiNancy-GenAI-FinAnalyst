@@ -13,7 +13,7 @@ This system acts as a **bridge between real-time information and generative AI**
 - ⚡ **Semantic Search** with FAISS
 - 💾 **Persistent Memory** (no re-scraping on restart)
 - 🌐 **Interactive UI** via Streamlit
-- 🤖 **Powered by Google Gemini 1.5 Flash**
+- 🤖 **Powered by Google Gemini 2.5 Flash**
 
 ---
 
@@ -26,7 +26,7 @@ The project is built on **four core pillars**:
 | **Interface** | Streamlit | Web dashboard, topic input, debug logs |
 | **Orchestration** | LangChain | Connects tools, loaders, embeddings, and LLM |
 | **Memory / Storage** | FAISS + Pickle | Vector similarity search & persistent storage |
-| **LLM (Brain)** | Google Gemini 1.5 Flash | Reads retrieved data & generates answers |
+| **LLM (Brain)** | Google Gemini 2.5 Flash | Reads retrieved data & generates answers |
 
 ---
 
@@ -121,7 +121,7 @@ Solves a common FAISS bug where loaded indexes lose search capability.
 - **LangChain**
 - **FAISS**
 - **HuggingFace Embeddings**
-- **Google Gemini 1.5 Flash**
+- **Google Gemini 2.5 Flash**
 - **DuckDuckGo Search**
 - **Pickle**
 
@@ -146,6 +146,14 @@ Solves a common FAISS bug where loaded indexes lose search capability.
 - Resume-ready GenAI system design
 
 ---
+
+<img width="959" height="472" alt="image" src="https://github.com/user-attachments/assets/703c63ae-f8b4-4e31-8de1-091a016c1a4d" />
+<img width="943" height="352" alt="image" src="https://github.com/user-attachments/assets/e6d1f405-3ddb-4b3a-8766-91b4522a01c6" />
+<img width="870" height="389" alt="image" src="https://github.com/user-attachments/assets/4ff043e7-188c-4989-9151-0ee30b719b90" />
+<img width="842" height="359" alt="image" src="https://github.com/user-attachments/assets/580baec5-736d-42e4-a4d0-3154fc9e3e73" />
+
+
+
 
 ## 📜 License
 
