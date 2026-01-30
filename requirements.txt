@@ -1,0 +1,7 @@
+langchain>=0.1.0
+langchain-community
+langchain-google-genai
+streamlit
+unstructured
+faiss-cpu
+python-dotenv
