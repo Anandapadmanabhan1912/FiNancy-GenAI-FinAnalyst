@@ -20,6 +20,7 @@ This system acts as a **bridge between real-time information and generative AI**
 - 🤖 Powered by Google Gemini 2.5 Flash
 
 ---
+```text
 ┌──────────────────────────────┐
 │          Streamlit UI        │
 │          (Frontend)          │
@@ -50,7 +51,7 @@ This system acts as a **bridge between real-time information and generative AI**
           │  (Answer Generator)  │
           └──────────────────────┘
 
-
+```
 ---
 ## 🏗️ System Architecture
 
