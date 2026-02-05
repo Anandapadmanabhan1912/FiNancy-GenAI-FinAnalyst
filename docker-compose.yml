@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  search:
+    build: ./services/search_service
+    ports: ["8000:8000"]
+
+  ingestion:
+    build: ./services/ingestion_service
+    volumes:
+      - ./data:/app
+    ports: ["8001:8001"]
+
+  rag:
+    build: ./services/rag_service
+    env_file: .env
+    volumes:
+      - ./data:/app
+    ports: ["8002:8002"]
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - search
+      - rag
