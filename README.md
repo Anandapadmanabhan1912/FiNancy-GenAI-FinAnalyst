@@ -2,45 +2,56 @@
 
 An **Automated Research Agent** built using **Retrieval-Augmented Generation (RAG)** that connects **live web data** with **Large Language Models** to answer questions using **news published minutes ago** — not stale training data.
 
+The application is built as a containerized, microservices-based system using FastAPI, Docker, and Docker Compose, enabling easy local development, scalability, and production-grade deployment.
 This system acts as a **bridge between real-time information and generative AI**, ensuring answers are **grounded, factual, and source-aware**.
 
 ---
 
 ## 🚀 Key Features
 
-- 🔎 **Live Web Research** using DuckDuckGo
-- 🧠 **RAG Architecture** to prevent hallucinations
-- ⚡ **Semantic Search** with FAISS
-- 💾 **Persistent Memory** (no re-scraping on restart)
-- 🌐 **Interactive UI** via Streamlit
-- 🤖 **Powered by Google Gemini 2.5 Flash**
+- 🔎 Live Web Research using DuckDuckGo
+- 🧠 RAG Architecture to prevent hallucinations
+- ⚡ Semantic Search with FAISS
+- 💾 Persistent Vector Memory
+- 🌐 Streamlit Frontend
+- 🔌 FastAPI Microservices
+- 🐳 Dockerized Services
+- 🧩 Docker Compose Orchestration
+- 🤖 Powered by Google Gemini 2.5 Flash
 
 ---
+┌──────────────────────────────┐
+│          Streamlit UI        │
+│          (Frontend)          │
+│        Port: 8501            │
+└───────────────┬──────────────┘
+                │ HTTP / REST
+                ▼
+┌──────────────────────────────┐
+│     FastAPI Orchestrator     │
+│      (API Gateway Layer)    │
+│        Port: 8000            │
+└───────────────┬──────────────┘
+        │        │        │
+        │        │        │
+        ▼        ▼        ▼
+┌──────────┐ ┌──────────┐ ┌──────────────┐
+│ Research │ │ Ingestion│ │ Vector Store │
+│ Service  │ │ Service  │ │  (FAISS)     │
+│ (Search) │ │ (Scrape) │ │ Persistent   │
+└────┬─────┘ └────┬─────┘ └──────┬───────┘
+     │            │              │
+     └────────────┴──────────────┘
+                    │
+                    ▼
+          ┌──────────────────────┐
+          │     LLM Service      │
+          │  Gemini 2.5 Flash    │
+          │  (Answer Generator)  │
+          └──────────────────────┘
 
 
-
-                 ┌────────────────┐
-                 │  Streamlit UI  │
-                 │ (Frontend)     │
-                 └───────┬────────┘
-                         │
-                 ┌───────▼────────┐
-                 │ FastAPI Gateway│
-                 │ / Orchestrator │
-                 └───────┬────────┘
-      ┌──────────────────┼──────────────────┐
-      │                  │                  │
-┌─────▼─────┐      ┌─────▼─────┐      ┌─────▼─────┐
-│ Research  │      │ Ingestion │      │ Vector DB │
-│ Service   │      │ Service   │      │ Service   │
-└───────────┘      └───────────┘      └───────────┘
-                                              │
-                                       ┌──────▼──────┐
-                                       │  LLM Service│
-                                       │ (Gemini)    │
-                                       └─────────────┘
-
-
+---
 ## 🏗️ System Architecture
 
 The project is built on **four core pillars**:
@@ -54,13 +65,13 @@ The project is built on **four core pillars**:
 
 ---
 
-## 🧬 How It Works (RAG Pipeline)
+##  How It Works (RAG Pipeline)
 
 The agent follows a **4-stage pipeline** that transforms a user query into a **grounded conversational response**.
 
 ---
 
-### 1️⃣ Automated Research (Discovery)
+###  Automated Research (Discovery)
 
 - Uses **DuckDuckGo Search Tool**
 - Fetches top web snippets for the given topic
@@ -72,7 +83,7 @@ Limits noise and improves factual precision.
 
 ---
 
-### 2️⃣ Document Ingestion (Scraping & Processing)
+### Document Ingestion (Scraping & Processing)
 
 - Uses `UnstructuredURLLoader` to scrape article text
 - Applies **RecursiveCharacterTextSplitter**
@@ -81,25 +92,24 @@ Limits noise and improves factual precision.
 - Chunk size: **1000 characters**
 - Overlap: **200 characters**
 
-📌 *Why overlap?*  
+
 Preserves sentence continuity across chunks and prevents context loss.
 
 ---
 
-### 3️⃣ Vectorization (Semantic Indexing)
+###  Vectorization (Semantic Indexing)
 
-This is where **AI-powered search** happens.
 
 - **Embedding Model:** `all-MiniLM-L6-v2` (HuggingFace)
 - Each text chunk → **numerical vector**
 - Stored in **FAISS** for ultra-fast similarity search
 
-📌 *Result:*  
+
 Semantic understanding instead of keyword matching.
 
 ---
 
-### 4️⃣ Retrieval & Answer Generation
+###  Retrieval & Answer Generation
 
 When the user asks a question:
 
@@ -107,10 +117,6 @@ When the user asks a question:
 2. FAISS retrieves the **most relevant chunks**
 3. Retrieved chunks + question → sent to **Gemini**
 4. Gemini generates an answer **only using retrieved sources**
-
-✅ Prevents hallucinations  
-✅ Answers are grounded in real data  
-✅ Sources can be traced back
 
 ---
 
@@ -122,7 +128,6 @@ When the user asks a question:
   - Index is **reloaded**
   - Embedding function is **re-bound manually**
 
-📌 *Why this matters?*  
 Solves a common FAISS bug where loaded indexes lose search capability.
 
 ---
@@ -132,10 +137,7 @@ Solves a common FAISS bug where loaded indexes lose search capability.
 - Bypasses **Google Application Default Credentials (ADC)**
 - Explicitly passes `google_api_key` to the Gemini constructor
 
-✅ Works on any local machine  
-✅ No Google Cloud setup required  
-✅ Developer-friendly
-
+Works on any local machine  
 ---
 
 ## 🛠️ Tech Stack
@@ -151,24 +153,13 @@ Solves a common FAISS bug where loaded indexes lose search capability.
 
 ---
 
-## 📌 Use Cases
+##  Use Cases
 
 - Real-time news research
 - Market & finance analysis
 - Academic literature scanning
 - Fact-checked GenAI chatbots
 - Enterprise RAG systems
-
----
-
-## 📈 Why This Project Stands Out
-
-- Implements **true RAG**, not prompt stuffing
-- Uses **live web data**, not static PDFs
-- Handles **persistence and cold reloads**
-- Production-oriented architecture
-- Resume-ready GenAI system design
-
 ---
 
 <img width="959" height="472" alt="image" src="https://github.com/user-attachments/assets/703c63ae-f8b4-4e31-8de1-091a016c1a4d" />
@@ -188,8 +179,8 @@ MIT License
 ## 👤 Author
 
 **Anandapadmanabhan B**  
-*GenAI | RAG Systems | Full-Stack AI Engineering*
+*GenAI | Full-Stack Web | React Native | Python Fullstack AI/ML*
 
 ---
 
-⭐ If you find this useful, consider starring the repo!
+⭐ Please star !
